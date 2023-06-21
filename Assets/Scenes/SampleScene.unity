@@ -238,7 +238,7 @@ GameObject:
   - component: {fileID: 26391232}
   m_Layer: 6
   m_Name: Particle System
-  m_TagString: Untagged
+  m_TagString: Particle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5625,8 +5625,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   progressSlider: {fileID: 133580785}
-  sparkParticles: {fileID: 26391233}
   speedSlider: 30
+  speedSliderDecrease: 0
+  sparkParticles: {fileID: 0}
 --- !u!1 &520103910
 GameObject:
   m_ObjectHideFlags: 0
@@ -6071,7 +6072,7 @@ GameObject:
   - component: {fileID: 939648368}
   m_Layer: 6
   m_Name: Particle System
-  m_TagString: Untagged
+  m_TagString: Particle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

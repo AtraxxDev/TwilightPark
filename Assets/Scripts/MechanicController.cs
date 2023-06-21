@@ -8,14 +8,14 @@ public class MechanicController : MonoBehaviour
     public float interactRange = 2f;
     public LayerMask interactLayer;
     public Slider progressSlider;
-    public ParticleSystem sparkParticles;
     public float speedSlider;
     public float speedSliderDecrease;
 
     private bool isRepairing = false;
-    private bool isProgressUpdating = false; // Nuevo flag para controlar la actualización del progreso
+    private bool isProgressUpdating = false;
     private float repairProgress = 0f;
-    private RaycastHit hit; // Mover la declaración de la variable hit aquí
+    private RaycastHit hit;
+    [SerializeField] private ParticleSystem sparkParticles;
 
     void Update()
     {
@@ -26,11 +26,11 @@ public class MechanicController : MonoBehaviour
 
         if (Input.GetKeyUp(KeyCode.E))
         {
-            progressSlider.gameObject.SetActive(false);
+            
             ResetRepairProgress();
         }
 
-        if (isRepairing && isProgressUpdating) // Solo actualizar el progreso si el flag isProgressUpdating es verdadero
+        if (isRepairing && isProgressUpdating)
         {
             UpdateRepairProgress();
         }
@@ -55,7 +55,8 @@ public class MechanicController : MonoBehaviour
         isRepairing = true;
         progressSlider.gameObject.SetActive(true);
         repairProgress = progressSlider.minValue;
-        isProgressUpdating = true; // Habilitar la actualización del progreso
+        isProgressUpdating = true;
+        sparkParticles = hit.collider.GetComponentInChildren<ParticleSystem>();
 
         // Aquí puedes realizar cualquier otra acción relacionada con el inicio de la reparación del juego mecánico
     }
@@ -74,9 +75,8 @@ public class MechanicController : MonoBehaviour
     void FinishRepair()
     {
         isRepairing = false;
-        isProgressUpdating = false; // Deshabilitar la actualización del progreso
+        isProgressUpdating = false;
         progressSlider.gameObject.SetActive(false);
-        sparkParticles.Stop();
 
         if (hit.collider != null)
         {
@@ -94,11 +94,22 @@ public class MechanicController : MonoBehaviour
         {
             Debug.LogWarning("No se encontró un objeto golpeado para finalizar la reparación.");
         }
+
+        StopSparkParticles();
     }
 
     void ResetRepairProgress()
     {
-        isProgressUpdating = false; // Detener la actualización del progreso
+        progressSlider.gameObject.SetActive(false);
+        isProgressUpdating = false;
         repairProgress = progressSlider.minValue;
+    }
+
+    void StopSparkParticles()
+    {
+        if (sparkParticles != null)
+        {
+            sparkParticles.Stop();
+        }
     }
 }
