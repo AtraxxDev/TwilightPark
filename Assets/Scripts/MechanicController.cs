@@ -10,8 +10,10 @@ public class MechanicController : MonoBehaviour
     public Slider progressSlider;
     public ParticleSystem sparkParticles;
     public float speedSlider;
+    public float speedSliderDecrease;
 
     private bool isRepairing = false;
+    private bool isProgressUpdating = false; // Nuevo flag para controlar la actualización del progreso
     private float repairProgress = 0f;
     private RaycastHit hit; // Mover la declaración de la variable hit aquí
 
@@ -22,7 +24,13 @@ public class MechanicController : MonoBehaviour
             TryStartRepair();
         }
 
-        if (isRepairing)
+        if (Input.GetKeyUp(KeyCode.E))
+        {
+            progressSlider.gameObject.SetActive(false);
+            ResetRepairProgress();
+        }
+
+        if (isRepairing && isProgressUpdating) // Solo actualizar el progreso si el flag isProgressUpdating es verdadero
         {
             UpdateRepairProgress();
         }
@@ -47,6 +55,7 @@ public class MechanicController : MonoBehaviour
         isRepairing = true;
         progressSlider.gameObject.SetActive(true);
         repairProgress = progressSlider.minValue;
+        isProgressUpdating = true; // Habilitar la actualización del progreso
 
         // Aquí puedes realizar cualquier otra acción relacionada con el inicio de la reparación del juego mecánico
     }
@@ -65,6 +74,7 @@ public class MechanicController : MonoBehaviour
     void FinishRepair()
     {
         isRepairing = false;
+        isProgressUpdating = false; // Deshabilitar la actualización del progreso
         progressSlider.gameObject.SetActive(false);
         sparkParticles.Stop();
 
@@ -84,5 +94,11 @@ public class MechanicController : MonoBehaviour
         {
             Debug.LogWarning("No se encontró un objeto golpeado para finalizar la reparación.");
         }
+    }
+
+    void ResetRepairProgress()
+    {
+        isProgressUpdating = false; // Detener la actualización del progreso
+        repairProgress = progressSlider.minValue;
     }
 }
