@@ -132,4 +132,22 @@ public class MechanicController : MonoBehaviour
             sparkParticles.Stop();
         }
     }
+
+    void OnDrawGizmos()
+    {
+        Ray ray = new Ray(transform.position, transform.forward);
+        RaycastHit hit;
+        bool hasCollision = Physics.Raycast(ray, out hit, interactRange, interactLayer);
+
+        if (hasCollision)
+        {
+            Gizmos.color = Color.magenta;
+        }
+        else
+        {
+            Gizmos.color = Color.green;
+        }
+
+        Gizmos.DrawRay(ray.origin, ray.direction * interactRange);
+    }
 }
