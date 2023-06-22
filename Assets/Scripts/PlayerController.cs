@@ -9,7 +9,9 @@ public class PlayerController : MonoBehaviour
 
     private float verticalRotation = 0f;
 
-   
+    public GameObject ListHomeWork;
+    public GameObject ListM;
+    [SerializeField]private bool IsUiactive = false;
 
     void Start()
     {
@@ -22,8 +24,7 @@ public class PlayerController : MonoBehaviour
     {
         HandleMovement();
         HandleRotation();
-        
-        
+        UIListHome();
 
     }
 
@@ -48,4 +49,27 @@ public class PlayerController : MonoBehaviour
         transform.Rotate(Vector3.up * mouseX);
         playerCamera.transform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
     }
+
+    public void UIListHome()
+    {
+        if (IsUiactive == false)
+        {
+            if (Input.GetKeyDown(KeyCode.M))
+            {
+                ListM.SetActive(false);
+                IsUiactive = true;
+                ListHomeWork.SetActive(true);
+            }
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.M))
+            {
+                ListM.SetActive(true);
+                IsUiactive = false;
+                ListHomeWork.SetActive(false);
+            }
+        }
+    }
+
 }
