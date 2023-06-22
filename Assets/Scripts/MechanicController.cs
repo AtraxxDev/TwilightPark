@@ -26,7 +26,6 @@ public class MechanicController : MonoBehaviour
 
         if (Input.GetKeyUp(KeyCode.E))
         {
-            
             ResetRepairProgress();
         }
 
@@ -42,15 +41,36 @@ public class MechanicController : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, interactRange, interactLayer))
         {
-            GameMechanicState gameMechanicController = hit.collider.GetComponent<GameMechanicState>();
-            if (gameMechanicController != null && !gameMechanicController.isRepaired)
+            GameMechanicState gameMechanicState = hit.collider.GetComponent<GameMechanicState>();
+            if (gameMechanicState != null)
             {
-                StartRepair(gameMechanicController);
+                if (!gameMechanicState.isRepaired)
+                {
+                    int mechanicID = gameMechanicState.mechanicID;
+
+                    PlayerInventory playerInventory = FindObjectOfType<PlayerInventory>();
+                    if (playerInventory.gameMechanicBlueprints[mechanicID])
+                    {
+                        StartRepair(gameMechanicState);
+                    }
+                    else
+                    {
+                        Debug.Log("No tienes el plano necesario para reparar este juego mecánico.");
+                    }
+                }
+                else
+                {
+                    Debug.Log("Este juego mecánico ya ha sido reparado.");
+                }
+            }
+            else
+            {
+                Debug.LogWarning("No se encontró el componente GameMechanicState en el objeto golpeado.");
             }
         }
     }
 
-    void StartRepair(GameMechanicState gameMechanicController)
+    void StartRepair(GameMechanicState gameMechanicState)
     {
         isRepairing = true;
         progressSlider.gameObject.SetActive(true);
@@ -80,10 +100,10 @@ public class MechanicController : MonoBehaviour
 
         if (hit.collider != null)
         {
-            GameMechanicState gameMechanicController = hit.collider.GetComponent<GameMechanicState>();
-            if (gameMechanicController != null)
+            GameMechanicState gameMechanicState = hit.collider.GetComponent<GameMechanicState>();
+            if (gameMechanicState != null)
             {
-                gameMechanicController.isRepaired = true;
+                gameMechanicState.isRepaired = true;
             }
             else
             {

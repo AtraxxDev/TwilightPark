@@ -5070,6 +5070,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isRepaired: 0
+  mechanicID: 1
 --- !u!65 &50259277
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5641,7 +5642,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e91fab502d909fe4e80adae325617584, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameMechanicBlueprints: 0000
+  gameMechanicBlueprints: 
 --- !u!1 &520103910
 GameObject:
   m_ObjectHideFlags: 0
@@ -5848,6 +5849,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isRepaired: 0
+  mechanicID: 0
 --- !u!65 &645386168
 BoxCollider:
   m_ObjectHideFlags: 0
