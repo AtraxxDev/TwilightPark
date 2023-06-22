@@ -5489,6 +5489,7 @@ GameObject:
   - component: {fileID: 514518769}
   - component: {fileID: 514518775}
   - component: {fileID: 514518776}
+  - component: {fileID: 514518777}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -5628,6 +5629,19 @@ MonoBehaviour:
   speedSlider: 30
   speedSliderDecrease: 0
   sparkParticles: {fileID: 0}
+--- !u!114 &514518777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 514518768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e91fab502d909fe4e80adae325617584, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameMechanicBlueprints: 0000
 --- !u!1 &520103910
 GameObject:
   m_ObjectHideFlags: 0
