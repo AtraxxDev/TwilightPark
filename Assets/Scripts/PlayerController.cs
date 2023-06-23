@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerController : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class PlayerController : MonoBehaviour
     public Camera playerCamera;          // Referencia a la cámara del jugador
 
     private float verticalRotation = 0f;
-
+    [SerializeField] private UnityEvent openEvent;
     public GameObject ListHomeWork;
     public GameObject ListM;
     [SerializeField]private bool IsUiactive = false;
@@ -59,6 +60,7 @@ public class PlayerController : MonoBehaviour
                 ListM.SetActive(false);
                 IsUiactive = true;
                 ListHomeWork.SetActive(true);
+                openEvent.Invoke();
             }
         }
         else
@@ -68,6 +70,7 @@ public class PlayerController : MonoBehaviour
                 ListM.SetActive(true);
                 IsUiactive = false;
                 ListHomeWork.SetActive(false);
+                openEvent.Invoke();
             }
         }
     }

@@ -9,13 +9,16 @@ public class MechanicController : MonoBehaviour
     public LayerMask interactLayer;
     public Slider progressSlider;
     public float speedSlider;
-    public float speedSliderDecrease;
+    public AudioSource repairSound;
+    public AudioSource repairCompleteSound;
+    public GameObject[] checkMechanics;
 
     private bool isRepairing = false;
     private bool isProgressUpdating = false;
     private float repairProgress = 0f;
     private RaycastHit hit;
     [SerializeField] private ParticleSystem sparkParticles;
+    [SerializeField] private Light pointlightComplete;
 
     void Update()
     {
@@ -74,9 +77,11 @@ public class MechanicController : MonoBehaviour
     {
         isRepairing = true;
         progressSlider.gameObject.SetActive(true);
+        repairSound.Play();
         repairProgress = progressSlider.minValue;
         isProgressUpdating = true;
         sparkParticles = hit.collider.GetComponentInChildren<ParticleSystem>();
+        pointlightComplete = hit.collider.GetComponentInChildren<Light>();
 
         // Aquí puedes realizar cualquier otra acción relacionada con el inicio de la reparación del juego mecánico
     }
@@ -104,6 +109,11 @@ public class MechanicController : MonoBehaviour
             if (gameMechanicState != null)
             {
                 gameMechanicState.isRepaired = true;
+                repairCompleteSound.Play();
+                pointlightComplete.enabled = true;
+                // Verificar el ID y activar el objeto correspondiente
+                int mechanicID = gameMechanicState.mechanicID;
+                ActivateObjectByMechanicID(mechanicID);
             }
             else
             {
@@ -121,6 +131,7 @@ public class MechanicController : MonoBehaviour
     void ResetRepairProgress()
     {
         progressSlider.gameObject.SetActive(false);
+        repairSound.Stop();
         isProgressUpdating = false;
         repairProgress = progressSlider.minValue;
     }
@@ -132,6 +143,25 @@ public class MechanicController : MonoBehaviour
             sparkParticles.Stop();
         }
     }
+
+    void ActivateObjectByMechanicID(int mechanicID)
+    {
+        // Aquí puedes definir la lógica para activar el objeto según el ID del juego mecánico reparado
+        switch (mechanicID)
+        {
+            case 0:
+                checkMechanics[0].SetActive(true);// Activar objeto con ID 0
+                break;
+            case 1:
+                checkMechanics[1].SetActive(true);// Activar objeto con ID 0  // Activar objeto con ID 1
+                break;
+            // Agrega más casos según tus necesidades
+            default:
+                Debug.LogWarning("ID de juego mecánico no reconocido: " + mechanicID);
+                break;
+        }
+    }
+
 
     void OnDrawGizmos()
     {

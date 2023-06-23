@@ -6,6 +6,7 @@ public class PlayerBlueprintCollector : MonoBehaviour
 {
     public float interactRange = 2f;
     public LayerMask interactLayer;
+    public AudioSource takeBlueprint;
 
     void Update()
     {
@@ -29,6 +30,7 @@ public class PlayerBlueprintCollector : MonoBehaviour
                 PlayerInventory playerInventory = FindObjectOfType<PlayerInventory>();
                 if (playerInventory != null)
                 {
+                    takeBlueprint.Play();
                     playerInventory.gameMechanicBlueprints[blueprintID] = true;
                     Destroy(hit.collider.gameObject); // Destruye el objeto que contiene el plano
                     Debug.Log("Se recolectó el plano con ID: " + blueprintID);
