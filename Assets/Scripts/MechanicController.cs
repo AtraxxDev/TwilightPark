@@ -12,12 +12,13 @@ public class MechanicController : MonoBehaviour
     public AudioSource repairSound;
     public AudioSource repairCompleteSound;
     public GameObject[] checkMechanics;
-
+    public ParticleSystem repairparticles;
     private bool isRepairing = false;
     private bool isProgressUpdating = false;
     private float repairProgress = 0f;
     private RaycastHit hit;
     [SerializeField] private ParticleSystem sparkParticles;
+    
     [SerializeField] private Light pointlightComplete;
 
     void Update()
@@ -80,6 +81,7 @@ public class MechanicController : MonoBehaviour
         repairSound.Play();
         repairProgress = progressSlider.minValue;
         isProgressUpdating = true;
+        repairparticles.Play();
         sparkParticles = hit.collider.GetComponentInChildren<ParticleSystem>();
         pointlightComplete = hit.collider.GetComponentInChildren<Light>();
 
@@ -125,6 +127,8 @@ public class MechanicController : MonoBehaviour
             Debug.LogWarning("No se encontró un objeto golpeado para finalizar la reparación.");
         }
 
+        repairparticles.Stop();
+
         StopSparkParticles();
     }
 
@@ -132,6 +136,8 @@ public class MechanicController : MonoBehaviour
     {
         progressSlider.gameObject.SetActive(false);
         repairSound.Stop();
+        repairparticles.Stop();
+
         isProgressUpdating = false;
         repairProgress = progressSlider.minValue;
     }
